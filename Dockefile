@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install eventlet for high-speed async processing
+RUN pip install --no-cache-dir \
+    flask \
+    flask-socketio \
+    eventlet \
+    huggingface_hub
+
+COPY app.py /app/
+
+# Setup persistent storage folder
+RUN mkdir -p /tmp/uploads && chmod 777 /tmp/uploads
+
+EXPOSE 7860
+
+CMD ["python", "app.py"]
